@@ -7,21 +7,27 @@ public class BowlingGame {
         List<Frame> frames = createFrame(bowlingCode);
         int score = 0;
         for (Frame frame : frames) {
-            if (isSpare(frame.getNext_first())) {
-                score += 10 + Integer.valueOf(frame.getNext_second());
-            } else {
-                if (isStrike(frame.getSelf())) {
+            score += calculateFrameScore(frame);
+        }
+        return score;
+    }
+
+    private int calculateFrameScore(Frame frame) {
+        int score = 0;
+        if (isSpare(frame.getNext_first())) {
+            score += 10 + Integer.valueOf(frame.getNext_second());
+        } else {
+            if (isStrike(frame.getSelf())) {
+                score += 10;
+                if (isSpare(frame.getNext_second())) {
                     score += 10;
-                    if (isSpare(frame.getNext_second())) {
-                        score += 10;
-                    } else {
-                        score += Integer.valueOf(frame.getNext_first());
-                        score += Integer.valueOf(frame.getNext_second());
-                    }
                 } else {
-                    score += Integer.valueOf(frame.getSelf());
                     score += Integer.valueOf(frame.getNext_first());
+                    score += Integer.valueOf(frame.getNext_second());
                 }
+            } else {
+                score += Integer.valueOf(frame.getSelf());
+                score += Integer.valueOf(frame.getNext_first());
             }
         }
         return score;
