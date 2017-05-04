@@ -34,64 +34,29 @@ public class BowlingGame {
         // 遍历除了最后一颗球之外的球
         for (int i = 0; i < 9; i++) {
             String self = setSelf(str[i]);
-            String next_first;
-            String next_second;
-            setSelf(str[i]);
-            if (str[i].length() == 1) {
-
-                if (str[i + 1].length() == 1) {
-                    next_first = "X";
-                    if (i == 8) {
-                        next_second = str[11].substring(0, 1);
-                    } else {
-                        next_second = str[i + 2].substring(0, 1);
-                    }
-                } else {
-                    next_first = str[i + 1].substring(0, 1);
-                    next_second = str[i + 1].substring(1, 2);
-                }
-                if (self.equals("X")) {
-                    self = "10";
-                }
-                if (next_first.equals("X")) {
-                    next_first = "10";
-                }
-                if (next_second.equals("X")) {
-                    next_second = "10";
-                }
-                if (self.equals("-")) {
-                    self = "0";
-                }
-                if (next_first.equals("-")) {
-                    next_first = "0";
-                }
-                if (next_second.equals("-")) {
-                    next_second = "0";
-                }
-                frames.add(new Frame(self, next_first, next_second));
-            } else {
-                next_first = str[i].substring(1, 2);
-                next_second = str[i + 1].substring(0, 1);
-                if (self.equals("X")) {
-                    self = "10";
-                }
-                if (next_first.equals("X")) {
-                    next_first = "10";
-                }
-                if (next_second.equals("X")) {
-                    next_second = "10";
-                }
-                if (self.equals("-")) {
-                    self = "0";
-                }
-                if (next_first.equals("-")) {
-                    next_first = "0";
-                }
-                if (next_second.equals("-")) {
-                    next_second = "0";
-                }
-                frames.add(new Frame(self, next_first, next_second));
+            String next_first = setNextFirst(str[i], str[i + 1]);
+            String next_second = setNextSecond(str[i], str[i + 1],
+                    str.length == 12 ? str[i + 2] : " ", str.length == 12 ? str[i + 3] : " ");
+            if (self.equals("X")) {
+                self = "10";
             }
+            if (next_first.equals("X")) {
+                next_first = "10";
+            }
+            if (next_second.equals("X")) {
+                next_second = "10";
+            }
+            if (self.equals("-")) {
+                self = "0";
+            }
+            if (next_first.equals("-")) {
+                next_first = "0";
+            }
+            if (next_second.equals("-")) {
+                next_second = "0";
+            }
+            frames.add(new Frame(self, next_first, next_second));
+
         }
         if (str[9].length() == 1) {
             String self = "X";
@@ -154,6 +119,23 @@ public class BowlingGame {
         }
 
         return frames;
+    }
+
+    private String setNextSecond(String self, String nextFirst, String nextSecond, String nextThird) {
+        if (self.length() == 2) {
+            return nextFirst.substring(0, 1);
+        }
+        if (nextFirst.length() == 1) {
+            return nextSecond.isEmpty() ? nextThird.substring(0, 1) : nextSecond.substring(0, 1);
+        }
+        return nextFirst.substring(1, 2);
+    }
+
+    private String setNextFirst(String self, String nextFirst) {
+        if (self.length() == 2) {
+            return self.substring(1, 2);
+        }
+        return nextFirst.substring(0, 1);
     }
 
     private String setSelf(String self) {
