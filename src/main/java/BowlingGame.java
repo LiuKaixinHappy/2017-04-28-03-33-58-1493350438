@@ -7,13 +7,12 @@ public class BowlingGame {
         List<Frame> frames = createFrame(bowlingCode);
         int score = 0;
         for (Frame frame : frames) {
-            if (frame.getNext_first().equals("/")) {
-                score += 10;
-                score += Integer.valueOf(frame.getNext_second());
+            if (isSpare(frame.getNext_first())) {
+                score += 10 + Integer.valueOf(frame.getNext_second());
             } else {
-                if (frame.getSelf().equals("10")) {
+                if (isStrike(frame.getSelf())) {
                     score += 10;
-                    if (frame.getNext_second().equals("/")) {
+                    if (isSpare(frame.getNext_second())) {
                         score += 10;
                     } else {
                         score += Integer.valueOf(frame.getNext_first());
@@ -26,6 +25,14 @@ public class BowlingGame {
             }
         }
         return score;
+    }
+
+    private boolean isStrike(String string) {
+        return string.equals("10");
+    }
+
+    private boolean isSpare(String string) {
+        return string.equals("/");
     }
 
     private List<Frame> createFrame(String bowlingCode) {
