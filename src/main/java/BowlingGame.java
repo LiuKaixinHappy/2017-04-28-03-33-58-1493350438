@@ -13,24 +13,20 @@ public class BowlingGame {
     }
 
     private int calculateFrameScore(Frame frame) {
-        int score = 0;
         if (isSpare(frame.getNext_first())) {
-            score += 10 + Integer.valueOf(frame.getNext_second());
+            return  10 + Integer.valueOf(frame.getNext_second());
         } else {
             if (isStrike(frame.getSelf())) {
-                score += 10;
                 if (isSpare(frame.getNext_second())) {
-                    score += 10;
+                    return 20;
                 } else {
-                    score += Integer.valueOf(frame.getNext_first());
-                    score += Integer.valueOf(frame.getNext_second());
+                    return  10 + Integer.valueOf(frame.getNext_first()) + Integer.valueOf(frame.getNext_second());
+
                 }
             } else {
-                score += Integer.valueOf(frame.getSelf());
-                score += Integer.valueOf(frame.getNext_first());
+                return  Integer.valueOf(frame.getSelf()) + Integer.valueOf(frame.getNext_first());
             }
         }
-        return score;
     }
 
     private boolean isStrike(String string) {
