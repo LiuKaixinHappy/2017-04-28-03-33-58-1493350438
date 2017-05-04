@@ -6,7 +6,6 @@ public class BowlingGame {
     public int getBowlingScore(String bowlingCode) {
         List<Frame> frames = createFrame(bowlingCode);
         int score = 0;
-
         for (Frame frame : frames) {
             if (frame.getNext_first().equals("/")) {
                 score += 10;
@@ -30,15 +29,16 @@ public class BowlingGame {
     }
 
     private List<Frame> createFrame(String bowlingCode) {
-        List<Frame> frames = new ArrayList<Frame>();
+        List<Frame> frames = new ArrayList<>();
         String str[] = bowlingCode.split("\\|");
-        // 有额外球
+        // 遍历除了最后一颗球之外的球
         for (int i = 0; i < 9; i++) {
-            String self;
+            String self = setSelf(str[i]);
             String next_first;
             String next_second;
+            setSelf(str[i]);
             if (str[i].length() == 1) {
-                self = "X";
+
                 if (str[i + 1].length() == 1) {
                     next_first = "X";
                     if (i == 8) {
@@ -70,7 +70,6 @@ public class BowlingGame {
                 }
                 frames.add(new Frame(self, next_first, next_second));
             } else {
-                self = str[i].substring(0, 1);
                 next_first = str[i].substring(1, 2);
                 next_second = str[i + 1].substring(0, 1);
                 if (self.equals("X")) {
@@ -157,22 +156,26 @@ public class BowlingGame {
         return frames;
     }
 
-    private class Frame {
-        String self;
-        String next_first;
-        String next_second;
+    private String setSelf(String self) {
+        return self.substring(0, 1);
+    }
 
-        public Frame(String self, String next_first, String next_second) {
+    private class Frame {
+        private String self;
+        private String next_first;
+        private String next_second;
+
+        Frame(String self, String next_first, String next_second) {
             this.self = self;
             this.next_first = next_first;
             this.next_second = next_second;
         }
 
-        public String getSelf() {
+        String getSelf() {
             return self;
         }
 
-        public String getNext_first() {
+        String getNext_first() {
             return next_first;
         }
 
