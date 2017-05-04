@@ -45,27 +45,19 @@ public class BowlingGame {
                 next_second = setNextSecond(str[i], str[i + 1],
                         str.length == 12 ? str[i + 2] : "0", str.length == 12 ? str[i + 3] : "0");
             }
-            if (self.equals("X")) {
-                self = "10";
-            }
-            if (next_first.equals("X")) {
-                next_first = "10";
-            }
-            if (next_second.equals("X")) {
-                next_second = "10";
-            }
-            if (self.equals("-")) {
-                self = "0";
-            }
-            if (next_first.equals("-")) {
-                next_first = "0";
-            }
-            if (next_second.equals("-")) {
-                next_second = "0";
-            }
-            frames.add(new Frame(self, next_first, next_second));
+            frames.add(new Frame(toNum(self), toNum(next_first), toNum(next_second)));
         }
         return frames;
+    }
+
+    private String toNum(String str) {
+        if (str.equals("X")) {
+            return "10";
+        }
+        if (str.equals("-")) {
+            return "0";
+        }
+        return str;
     }
 
     private String setNextSecond(String self, String nextFirst, String nextSecond, String nextThird) {
