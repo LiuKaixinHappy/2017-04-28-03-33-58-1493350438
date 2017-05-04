@@ -14,19 +14,15 @@ public class BowlingGame {
 
     private int calculateFrameScore(Frame frame) {
         if (isSpare(frame.getNext_first())) {
-            return  10 + Integer.valueOf(frame.getNext_second());
-        } else {
-            if (isStrike(frame.getSelf())) {
-                if (isSpare(frame.getNext_second())) {
-                    return 20;
-                } else {
-                    return  10 + Integer.valueOf(frame.getNext_first()) + Integer.valueOf(frame.getNext_second());
-
-                }
-            } else {
-                return  Integer.valueOf(frame.getSelf()) + Integer.valueOf(frame.getNext_first());
-            }
+            return 10 + Integer.valueOf(frame.getNext_second());
         }
+        if (isStrike(frame.getSelf())) {
+            if (isSpare(frame.getNext_second())) {
+                return 20;
+            }
+            return 10 + Integer.valueOf(frame.getNext_first()) + Integer.valueOf(frame.getNext_second());
+        }
+        return Integer.valueOf(frame.getSelf()) + Integer.valueOf(frame.getNext_first());
     }
 
     private boolean isStrike(String string) {
@@ -109,7 +105,7 @@ public class BowlingGame {
             return next_first;
         }
 
-        public String getNext_second() {
+        String getNext_second() {
             return next_second;
         }
     }
