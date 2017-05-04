@@ -36,5 +36,12 @@ public class BowlingGameTest {
         assertEquals(19, new BowlingGame().getBowlingScore(bowlingCode));
 
     }
+
+    @Test
+    public void test_no_strike_and_spare_situation() throws Exception {
+        String bowlingCode = "12|23|34|45|56|67|78|89|88|88||";      //112
+        assertEquals(112, new BowlingGame().getBowlingScore(bowlingCode));
+
+    }
 }
 
