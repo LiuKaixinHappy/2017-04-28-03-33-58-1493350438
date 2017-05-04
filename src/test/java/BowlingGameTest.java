@@ -31,7 +31,7 @@ public class BowlingGameTest {
     }
 
     @Test
-    public void test_0_situation() throws Exception {
+    public void test_only_last_not_miss_situation() throws Exception {
         String bowlingCode = "--|--|--|--|--|--|--|--|--|X||81";      //19
         assertEquals(19, new BowlingGame().getBowlingScore(bowlingCode));
 
